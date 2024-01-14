@@ -1,8 +1,7 @@
 import express from "express";
 
 const app = express();
-const PORT = 8002;
 
-app.listen(PORT, () => {
-  console.log(`Server started successfully on port ${PORT}`);
+app.listen(8001, () => {
+   console.log(`Server started successfully on port ${process.env.PORT}`);
 });
