@@ -1,7 +1,14 @@
-import express from "express";
+import { app } from "./app.js";
+import ConnectDb from "./db/index.js";
 
-const app = express();
-
-app.listen(8001, () => {
-   console.log(`Server started successfully on port ${process.env.PORT}`);
-});
+ConnectDb()
+   .then(() => {
+      app.listen(process.env.PORT || 5000, () => {
+         console.log(
+            `server start sucessfullyyy....DB Host!!!_port:${process.env.PORT}`
+         );
+      });
+   })
+   .catch((error) =>
+      console.log("mongodb connection failed some error occur", error)
+   );
