@@ -42,6 +42,7 @@ const registerUser = asyncHandler(async (req, res) => {
          "Something went wrong while registering the user"
       );
    }
+
    return res
       .status(200)
       .json(new apiResponse(200, userCreated, "Successfully Account Created"));
