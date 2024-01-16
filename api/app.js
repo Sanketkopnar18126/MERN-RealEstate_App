@@ -16,7 +16,7 @@ app.use(
  * store any data in server
  * for cookies get cookie perform some crud operation read only in server
  */
-
+// allow to send data in json format if not it get undefined
 app.use(express.json({ limit: "16kb" }));
 app.use(urlencoded({ limit: "16kb", extended: true }));
 app.use(express.static("public"));
