@@ -48,4 +48,29 @@ const registerUser = asyncHandler(async (req, res) => {
       .json(new apiResponse(200, userCreated, "Successfully Account Created"));
 });
 
-export { registerUser };
+/*
+ * login user
+ * get data from the req body
+ * check user is already in Db or not
+ * and show the mssg
+ */
+const loginUser = asyncHandler(async (req, res) => {
+   const { email, password } = req.body;
+   const user = await User.findOne({
+      email: email,
+   });
+   if (!user) {
+      throw new apiError(400, "User Does Not Exist...Pls SignIn...!");
+   }
+
+   const checkpassword = user.isPasswordCorrect(password);
+   if (!checkpassword) {
+      throw new apiError(400, "Password is Incorrect");
+   }
+
+   return res
+      .status(200)
+      .json(new apiResponse(200, user, "Successfully Login"));
+});
+
+export { registerUser, loginUser };
