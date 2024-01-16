@@ -1,4 +1,4 @@
-class apiResponse extends Response {
+class apiResponse {
    constructor(statuscode, data, mssg = "something went wrong") {
       (this.statuscode = statuscode),
          (this.data = data),

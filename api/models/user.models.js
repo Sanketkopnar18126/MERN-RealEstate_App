@@ -1,23 +1,26 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 import bcrypt from "bcrypt";
 
-const userSchema = new mongoose.Schema({
-   username: {
-      type: String,
-      required: true,
-      unique: true,
+const userSchema = new Schema(
+   {
+      username: {
+         type: String,
+         required: true,
+         unique: true,
+      },
+      email: {
+         type: String,
+         required: true,
+         unique: true,
+      },
+      password: {
+         type: String,
+         require: true,
+         unique: true,
+      },
    },
-   email: {
-      type: String,
-      required: true,
-      unique: true,
-   },
-   password: {
-      type: String,
-      require: true,
-      unique: true,
-   },
-});
+   { timestamps: true }
+);
 
 /*
  * save password in hash format
