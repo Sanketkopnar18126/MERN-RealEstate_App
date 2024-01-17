@@ -1,14 +1,19 @@
 import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import {useDispatch,useSelector} from 'react-redux'
-import { signInFailed,signInSucsess,signInStart } from "../../Slice/user.slice.js";
+import { useDispatch, useSelector } from "react-redux";
+import {
+   signInFailed,
+   signInSucsess,
+   signInStart,
+} from "../../Slice/user.slice.js";
+import { OAuth } from "../../Components/OAuth/OAuth.jsx";
 export const Login = () => {
    const [userData, setuserdata] = useState({
       email: "",
       password: "",
    });
    // const [loading, setloading] = useState(false);
-   const {loading}=useSelector((state)=>state.userdata)
+   const { loading } = useSelector((state) => state.userdata);
    const [showbtn, setshowbtn] = useState(true);
    const { email, password } = userData;
 
@@ -17,14 +22,14 @@ export const Login = () => {
    //    setuserdata({...userData,password:e.target.value});
    //    console.log(password)
    // }
-const dispatch=useDispatch()
+   const dispatch = useDispatch();
    const navigate = useNavigate();
    const onHandleLogin = async (e) => {
       e.preventDefault();
       try {
          // setloading(true)
-         dispatch(signInStart())
-         setshowbtn(false)
+         dispatch(signInStart());
+         setshowbtn(false);
          const res = await fetch("/users/login", {
             method: "POST",
             headers: {
@@ -34,18 +39,18 @@ const dispatch=useDispatch()
          });
          const data = await res.json();
          console.log(data.mssg);
-         dispatch(signInSucsess(data))
+         dispatch(signInSucsess(data));
          // console.log(data)
          // setloading(false)
-         setshowbtn(true)
+         setshowbtn(true);
          setuserdata({
-            email:"",
-            password:""
-         })
+            email: "",
+            password: "",
+         });
          navigate("/");
       } catch (error) {
-        dispatch(signInFailed(error.mssg))
-         setshowbtn(true)
+         dispatch(signInFailed(error.mssg));
+         setshowbtn(true);
       }
    };
    return (
@@ -130,16 +135,19 @@ const dispatch=useDispatch()
                            Forgot password?
                         </a>
                      </div>
-                {showbtn &&(     <div className="flex justify-center items-center mt-1">
-                        <button
-                           type="button"
-                           onClick={onHandleLogin}
-                           className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4  focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
-                        >
-                           LogIn
-                        </button>
+                     {showbtn && (
+                        <div className="flex justify-center items-center mt-1">
+                           <button
+                              type="button"
+                              onClick={onHandleLogin}
+                              className="text-white w-[165px] bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4  focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+                           >
+                              LogIn
+                           </button>
+                        </div>
+                     )}
+                     <OAuth />
 
-                     </div>)}
                      {loading && (
                         <div
                            role="status"

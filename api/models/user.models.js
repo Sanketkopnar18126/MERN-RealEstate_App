@@ -19,6 +19,11 @@ const userSchema = new Schema(
          require: true,
          unique: true,
       },
+      avatar: {
+         type: String,
+         default:
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRFtmCCXQ1CRqhrCgqONuYChTz9lsJL5Ru1brHzqdoFixY_cUOxIAl9n40FCdtWS_zPSFc&usqp=CAU",
+      },
    },
    { timestamps: true }
 );
