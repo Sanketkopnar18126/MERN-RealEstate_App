@@ -54,6 +54,19 @@ const registerUser = asyncHandler(async (req, res) => {
  * check user is already in Db or not
  * and show the mssg
  */
+//  create function for generateAcess And Refresh Token
+
+const generateAccessAndRefreshToken = async (userId) => {
+   const user = await User.findById(userId);
+   const accessToken = await user.generateAcessToken();
+   // console.log("accessToken", accessToken);
+   const refreshToken = await user.generateRefreshToken();
+   // console.log("refreshToken", refreshToken);
+
+   user.refreshToken = refreshToken;
+   await user.save({ validateBeforeSave: false });
+   return { accessToken, refreshToken };
+};
 const loginUser = asyncHandler(async (req, res) => {
    const { email, password } = req.body;
    const user = await User.findOne({
@@ -68,9 +81,30 @@ const loginUser = asyncHandler(async (req, res) => {
       throw new apiError(400, "Password is Incorrect");
    }
 
+   const { accessToken, refreshToken } = await generateAccessAndRefreshToken(
+      user._id
+   );
+
+   const logedIn = await User.findById(user._id).select(
+      "-password -refreshToken"
+   );
+   // console.log("logedIn", logedIn);
+
+   const options = {
+      httpOnly: true,
+      secure: true,
+   };
    return res
       .status(200)
-      .json(new apiResponse(200, user, "Successfully Login"));
+      .cookie("accessToken", accessToken, options)
+      .cookie("refreshToken", refreshToken, options)
+      .json(
+         new apiResponse(
+            200,
+            { logedIn, accessToken, refreshToken },
+            "User sucessfully login"
+         )
+      );
 });
 
 export { registerUser, loginUser };

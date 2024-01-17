@@ -3,7 +3,7 @@ import ConnectDb from "./db/index.js";
 
 ConnectDb()
    .then(() => {
-      app.listen(process.env.PORT || 5000, () => {
+      app.listen(8001 || 5000, () => {
          console.log(
             `server start sucessfullyyy....DB Host!!!_port:${process.env.PORT}`
          );
