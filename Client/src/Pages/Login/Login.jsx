@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-
+import {useDispatch,useSelector} from 'react-redux'
+import { signInFailed,signInSucsess,signInStart } from "../../Slice/user.slice.js";
 export const Login = () => {
    const [userData, setuserdata] = useState({
       email: "",
       password: "",
    });
-   const [loading, setloading] = useState(false);
+   // const [loading, setloading] = useState(false);
+   const {loading}=useSelector((state)=>state.userdata)
    const [showbtn, setshowbtn] = useState(true);
    const { email, password } = userData;
 
@@ -15,12 +17,13 @@ export const Login = () => {
    //    setuserdata({...userData,password:e.target.value});
    //    console.log(password)
    // }
-
+const dispatch=useDispatch()
    const navigate = useNavigate();
    const onHandleLogin = async (e) => {
       e.preventDefault();
       try {
-         setloading(true)
+         // setloading(true)
+         dispatch(signInStart())
          setshowbtn(false)
          const res = await fetch("/users/login", {
             method: "POST",
@@ -31,8 +34,9 @@ export const Login = () => {
          });
          const data = await res.json();
          console.log(data.mssg);
+         dispatch(signInSucsess(data))
          // console.log(data)
-         setloading(false)
+         // setloading(false)
          setshowbtn(true)
          setuserdata({
             email:"",
@@ -40,8 +44,7 @@ export const Login = () => {
          })
          navigate("/");
       } catch (error) {
-         console.log("error", error);
-         setloading(false)
+        dispatch(signInFailed(error.mssg))
          setshowbtn(true)
       }
    };

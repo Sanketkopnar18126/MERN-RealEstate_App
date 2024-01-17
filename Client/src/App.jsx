@@ -5,9 +5,12 @@ import { Profile } from "./Pages/Profile/Profile";
 import { SignUp } from "./Pages/SignUp/SignUp";
 import { About } from "./Pages/About/About";
 import { Header } from "./Components/Header/Header";
+import {Provider} from 'react-redux'
+import { store } from "./Store/store.js";
 function App() {
   return (
     <>
+    <Provider store={store}>
       <BrowserRouter>
         <Header />
         <Routes>
@@ -18,6 +21,7 @@ function App() {
           <Route path="/about" element={<About />} />
         </Routes>
       </BrowserRouter>
+      </Provider>
     </>
   );
 }
