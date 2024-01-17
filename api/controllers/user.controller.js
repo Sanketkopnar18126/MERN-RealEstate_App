@@ -76,7 +76,7 @@ const loginUser = asyncHandler(async (req, res) => {
       throw new apiError(400, "User Does Not Exist...Pls SignIn...!");
    }
 
-   const checkpassword = user.isPasswordCorrect(password);
+   const checkpassword = await user.isPasswordCorrect(password);
    if (!checkpassword) {
       throw new apiError(400, "Password is Incorrect");
    }
@@ -101,7 +101,7 @@ const loginUser = asyncHandler(async (req, res) => {
       .json(
          new apiResponse(
             200,
-            { logedIn, accessToken, refreshToken },
+            { user: logedIn, accessToken, refreshToken },
             "User sucessfully login"
          )
       );
