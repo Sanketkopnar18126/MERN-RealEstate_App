@@ -6,11 +6,13 @@ import { SignUp } from "./Pages/SignUp/SignUp";
 import { About } from "./Pages/About/About";
 import { Header } from "./Components/Header/Header";
 import {Provider} from 'react-redux'
-import { store } from "./Store/store.js";
+import { persistStor, store } from "./Store/store.js";
+import { PersistGate } from "redux-persist/integration/react";
 function App() {
   return (
     <>
     <Provider store={store}>
+      <PersistGate loading={null} persistor={persistStor} >
       <BrowserRouter>
         <Header />
         <Routes>
@@ -21,6 +23,7 @@ function App() {
           <Route path="/about" element={<About />} />
         </Routes>
       </BrowserRouter>
+      </PersistGate>
       </Provider>
     </>
   );
