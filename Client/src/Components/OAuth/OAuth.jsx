@@ -2,7 +2,9 @@ import { useDispatch } from "react-redux";
 import { app } from "../../../firbase";
 import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
 import { signInSucsess } from "../../Slice/user.slice";
+import { useNavigate } from "react-router-dom";
 export const OAuth = () => {
+   const navigate=useNavigate()
    const dispatch = useDispatch();
    const onClickGoogleSignIn = async () => {
       try {
@@ -22,8 +24,10 @@ export const OAuth = () => {
             }),
          });
          const data = await res.json();
-         console.log("data",data)
+         // console.log("data",data)
          dispatch(signInSucsess(data));
+         navigate('/')
+
       } catch (error) {
          console.log("errormmsg", error);
       }

@@ -13,7 +13,7 @@ export const Header = () => {
    const { currentuser } = useSelector((state) => state.userdata);
    useEffect(() => {
       setCurrentUser(currentuser);
-   }, []);
+   }, [currentuser]);
 
    //  console.log("cu",currentUser)
    const onHandleProfileDrop = () => {
@@ -46,7 +46,7 @@ export const Header = () => {
                   >
                      <img
                         className="w-8 h-8 rounded-full"
-                        src={currentUser.data.avatar}
+                        src={currentUser?.data?.user?.avatar}
                         alt="user photo"
                      />
                   </button>

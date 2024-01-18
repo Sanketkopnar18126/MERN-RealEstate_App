@@ -38,7 +38,7 @@ export const Login = () => {
             body: JSON.stringify(userData),
          });
          const data = await res.json();
-         console.log(data.mssg);
+         // console.log(data.mssg);
          dispatch(signInSucsess(data));
          // console.log(data)
          // setloading(false)
