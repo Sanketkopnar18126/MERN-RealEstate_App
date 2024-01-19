@@ -68,6 +68,8 @@ const generateAccessAndRefreshToken = async (userId) => {
    await user.save({ validateBeforeSave: false });
    return { accessToken, refreshToken };
 };
+
+//  login user
 const loginUser = asyncHandler(async (req, res) => {
    const { email, password } = req.body;
    const user = await User.findOne({
@@ -163,4 +165,40 @@ const googleSignIn = asyncHandler(async (req, res) => {
       console.log("error", error);
    }
 });
-export { registerUser, loginUser, googleSignIn };
+
+//  update user data
+
+const upadateProfile = asyncHandler(async (req, res) => {
+   const { email, username } = req.body;
+
+   // if (req.user._id !== req.params._id)
+   //    return next(errorHandler(401, "You can only update your own account!"));
+   console.log("req", req.body);
+
+   if (!(email || username)) {
+      throw new apiError(400, "All fields are required");
+   }
+
+   const user = await User.findByIdAndUpdate(
+      req?.user?._id,
+      {
+         $set: {
+            username: username,
+            email: email,
+         },
+      },
+      {
+         new: true,
+      }
+   ).select("-password -refreshToken");
+
+   console.log("user", user);
+   if (!user) {
+      throw new apiError(400, "user not exist");
+   }
+
+   return res
+      .status(200)
+      .json(new apiResponse(200, "update profile successfully....!!!!!"));
+});
+export { registerUser, loginUser, googleSignIn, upadateProfile };

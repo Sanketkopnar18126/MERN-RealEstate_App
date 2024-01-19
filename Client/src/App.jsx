@@ -7,6 +7,7 @@ import { Header } from "./Components/Header/Header";
 import {Provider} from 'react-redux'
 import { persistStor, store } from "./Store/store.js";
 import { PersistGate } from "redux-persist/integration/react";
+import { UpdateProfile } from "./Pages/UpdateProfile/UpdateProfile.jsx";
 function App() {
   return (
     <>
@@ -19,6 +20,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/about" element={<About />} />
+          <Route path="/updateprofile" element={<UpdateProfile/>}/>
         </Routes>
       </BrowserRouter>
       </PersistGate>
