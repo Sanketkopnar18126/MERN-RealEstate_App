@@ -3,9 +3,12 @@ import { app } from "../../../firbase";
 import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
 import { signInSucsess } from "../../Slice/user.slice";
 import { useNavigate } from "react-router-dom";
+
 export const OAuth = () => {
+
    const navigate=useNavigate()
    const dispatch = useDispatch();
+   
    const onClickGoogleSignIn = async () => {
       try {
          const provider = new GoogleAuthProvider();

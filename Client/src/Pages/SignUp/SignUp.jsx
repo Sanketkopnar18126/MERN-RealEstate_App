@@ -19,6 +19,7 @@ export const SignUp = () => {
     * create a proxy in vite.config file to save data on my server
     */
    const navigate = useNavigate();
+
    const onHandleSubmit = async (e) => {
       e.preventDefault();
       try {
@@ -39,15 +40,15 @@ export const SignUp = () => {
             email: "",
             password: "",
          });
-         navigate("/login");
          const data = await res.json();
-
+         
          console.log(data.mssg);
-
+         
          console.log("data", data);
-
+         
          // setErrorMessage(data.mssg);
          setshowbtn(true);
+         navigate("/login");
       } catch (error) {
          // console.log("error", Error.mssg);
          setloading(false);

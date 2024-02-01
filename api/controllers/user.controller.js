@@ -171,8 +171,18 @@ const googleSignIn = asyncHandler(async (req, res) => {
 const upadateProfile = asyncHandler(async (req, res) => {
    const { email, username } = req.body;
 
+   console.log("reqParams", req.params.id);
+
+   console.log("requser", req?.user?._id.toString());
    // if (req.user._id !== req.params._id)
    //    return next(errorHandler(401, "You can only update your own account!"));
+
+   if (req?.user?._id.toString() !== req?.params?.id) {
+      throw new apiError(
+         404,
+         "user does not exist....... you are trying to update another user profile ....Warning!!!!!"
+      );
+   }
    console.log("req", req.body);
 
    if (!(email || username)) {
@@ -199,6 +209,31 @@ const upadateProfile = asyncHandler(async (req, res) => {
 
    return res
       .status(200)
-      .json(new apiResponse(200, "update profile successfully....!!!!!"));
+      .json(new apiResponse(200, user, "update profile successfully....!!!!!"));
 });
-export { registerUser, loginUser, googleSignIn, upadateProfile };
+
+//  sign out  User
+const signOutUser = asyncHandler(async (req, res) => {
+   const user = await User.findByIdAndUpdate(
+      req?.user?._id,
+      {
+         refreshToken: undefined,
+      },
+      {
+         new: true,
+      }
+   );
+   // console.log("user", user);
+
+   const options = {
+      httpOnly: true,
+      secure: true,
+   };
+
+   return res
+      .status(200)
+      .clearCookie("accessToken", options)
+      .clearCookie("refreshToken", options)
+      .json(new apiResponse(200, {}, "User Sucessfully logout"));
+});
+export { registerUser, loginUser, googleSignIn, upadateProfile, signOutUser };

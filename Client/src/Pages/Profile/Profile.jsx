@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import {  useSelector } from "react-redux";
 import { useRef } from "react";
 import { app } from "../../../firbase";
 import {
@@ -8,15 +8,20 @@ import {
    ref,
    uploadBytesResumable,
 } from "firebase/storage";
-import { NavLink } from "react-router-dom";
+import { NavLink} from "react-router-dom";
+// import { signOut } from "../../Slice/user.slice";
 
 export const Profile = () => {
+
+   // const navigate=useNavigate()
+   // const dispatch=useDispatch()
    const fileref = useRef(null);
 
    const [data, setdata] = useState();
 
-   const { currentuser } = useSelector((state) => state.userdata);
-
+  let { currentuser } = useSelector((state) => state.userdata);
+   // const updatedata = useSelector((state) => state.updateUser);
+   // console.log("d", updatedata);
    const [avatarFile, setavatarfile] = useState(undefined);
 
    const [filePercent, setfilepercent] = useState(0);
@@ -25,20 +30,45 @@ export const Profile = () => {
 
    const [formData, setFormData] = useState({});
 
-   console.log("form", formData);
+   // console.log("form", formData);
 
    // console.log("pro", currentuser);
 
-   console.log(filePercent);
+   // console.log(filePercent);
+
+
    useEffect(() => {
-      setdata(currentuser);
+      setdata( currentuser);
+
       if (avatarFile) {
          onHandleAvatar(avatarFile);
       }
-   }, [currentuser, avatarFile]);
+   }, [currentuser, avatarFile ,data]);
    // console.log("da", data);
 
-   console.log("file", avatarFile);
+   // console.log("file", avatarFile);
+
+   const onHandleSignOut = async () => {
+      try {
+         const res = await fetch('/users/logout');
+       
+
+      console.log("User successfully logged out");
+      // Redirect after logout
+      const data=await res.json()
+      console.log("data",data?.data)
+      
+      // navigate('/login');
+   
+     
+          
+     
+      } catch (error) {
+         console.log("Fetch error:", error);
+      }
+   };
+   
+   
 
    const onHandleAvatar = (file) => {
       const storage = getStorage(app);
@@ -122,20 +152,20 @@ export const Profile = () => {
                )}
             </p>
             <h5 className="mb-1 text-xl font-medium text-gray-900 dark:text-white">
-               {data?.data?.user?.username}
+               {data?.data.user.username}
             </h5>
             <span className="text-sm text-gray-500 dark:text-gray-400">
-               {data?.data?.user?.email}
+               {data?.data.user.email}
             </span>
             <div className="flex mt-4 md:mt-6">
-               <a
-                  href="#"
+               <button
+                 onClick={onHandleSignOut}
                   className="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                >
                   SignOut
-               </a>
+               </button>
                <NavLink
-                  to={'/updateprofile'}
+                  to={"/updateprofile"}
                   className="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-700 dark:focus:ring-gray-700 ms-3"
                >
                   Update Profile

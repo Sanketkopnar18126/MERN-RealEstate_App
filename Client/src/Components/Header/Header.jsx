@@ -13,7 +13,7 @@ export const Header = () => {
    const { currentuser } = useSelector((state) => state.userdata);
    useEffect(() => {
       setCurrentUser(currentuser);
-   }, [currentuser]);
+   }, [currentUser,currentuser]);
 
    //  console.log("cu",currentUser)
    const onHandleProfileDrop = () => {
