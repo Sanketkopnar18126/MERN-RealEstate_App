@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import {  useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useRef } from "react";
 import { app } from "../../../firbase";
 import {
@@ -8,18 +8,17 @@ import {
    ref,
    uploadBytesResumable,
 } from "firebase/storage";
-import { NavLink} from "react-router-dom";
+import { NavLink } from "react-router-dom";
 // import { signOut } from "../../Slice/user.slice";
 
 export const Profile = () => {
-
    // const navigate=useNavigate()
    // const dispatch=useDispatch()
    const fileref = useRef(null);
 
    const [data, setdata] = useState();
 
-  let { currentuser } = useSelector((state) => state.userdata);
+   let { currentuser } = useSelector((state) => state.userdata);
    // const updatedata = useSelector((state) => state.updateUser);
    // console.log("d", updatedata);
    const [avatarFile, setavatarfile] = useState(undefined);
@@ -36,39 +35,31 @@ export const Profile = () => {
 
    // console.log(filePercent);
 
-
    useEffect(() => {
-      setdata( currentuser);
+      setdata(currentuser);
 
       if (avatarFile) {
          onHandleAvatar(avatarFile);
       }
-   }, [currentuser, avatarFile ,data]);
+   }, [currentuser, avatarFile, data]);
    // console.log("da", data);
 
    // console.log("file", avatarFile);
 
    const onHandleSignOut = async () => {
       try {
-         const res = await fetch('/users/logout');
-       
+         const res = await fetch("/users/logout");
 
-      console.log("User successfully logged out");
-      // Redirect after logout
-      const data=await res.json()
-      console.log("data",data?.data)
-      
-      // navigate('/login');
-   
-     
-          
-     
+         console.log("User successfully logged out");
+         // Redirect after logout
+         const data = await res.json();
+         console.log("data", data?.data);
+
+         // navigate('/login');
       } catch (error) {
          console.log("Fetch error:", error);
       }
    };
-   
-   
 
    const onHandleAvatar = (file) => {
       const storage = getStorage(app);
@@ -159,7 +150,7 @@ export const Profile = () => {
             </span>
             <div className="flex mt-4 md:mt-6">
                <button
-                 onClick={onHandleSignOut}
+                  onClick={onHandleSignOut}
                   className="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                >
                   SignOut
@@ -171,6 +162,7 @@ export const Profile = () => {
                   Update Profile
                </NavLink>
             </div>
+            <NavLink to={"/createlisting"} className="underline mt-4 hover:text-red-500 text-blue-700">Create Listing</NavLink>
          </div>
       </div>
    );

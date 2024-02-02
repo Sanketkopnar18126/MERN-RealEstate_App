@@ -3,6 +3,7 @@ import { apiResponse } from "../utils/apiResponse.js";
 import { asyncHandler } from "../utils/asynchHandler.js";
 
 const createListing = asyncHandler(async (req, res) => {
+   //  i have to check user is valid or not here
    try {
       const listing = await Listing.create(req.body);
       console.log("req.body", req.body);
