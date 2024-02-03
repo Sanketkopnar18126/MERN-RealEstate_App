@@ -12,7 +12,7 @@ export const UpdateProfile = () => {
    // console.log(userData)
    const { currentuser } = useSelector((state) => state.userdata);
    const navigate = useNavigate();
-   const dispatch=useDispatch()
+   const dispatch = useDispatch();
    // get Id
    // console.log(currentuser)
    // console.log("userId",userId.currentuser.data.user)
@@ -32,8 +32,8 @@ export const UpdateProfile = () => {
          );
 
          const data = await res.json();
-         console.log("data", data);
-dispatch(updateUserSuccess(data))
+         // console.log("data", data);
+         dispatch(updateUserSuccess(data));
          setuserdata({
             email: "",
             username: "",
