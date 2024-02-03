@@ -15,6 +15,7 @@ export const CreateListing = () => {
    // console.log("formData", formData);
    const [imgUploadError, setimgUploadError] = useState(false);
    const [uploading,setUploading]=useState(false)
+   
    const onUploadImg = () => {
       if (files.length > 0 && files.length + formData.imgUrl.length < 7) {
          setUploading(true)
