@@ -8,7 +8,7 @@ import {
    ref,
    uploadBytesResumable,
 } from "firebase/storage";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 // import { signOut } from "../../Slice/user.slice";
 
 export const Profile = () => {
@@ -28,7 +28,7 @@ export const Profile = () => {
    const [error, seterror] = useState(false);
 
    const [formData, setFormData] = useState({});
-
+   const [userListings, setUserListings] = useState([]);
    // console.log("form", formData);
 
    // console.log("pro", currentuser);
@@ -90,6 +90,20 @@ export const Profile = () => {
     * allow read;
     * allow write :if request.resource.size<2*1024*1024&& request.resource.contentType.matches('image/.*')
     */
+
+   const onHandleShowUserListings = async () => {
+      try {
+         const res = await fetch(
+            `/users/listings/${currentuser?.data?.user?._id}`
+         );
+         const data = await res.json();
+         // console.log(data);
+         setUserListings(data);
+      } catch (error) {
+         console.log("error occur at show listings", error);
+      }
+   };
+   console.log("userListings",userListings)
    return (
       <div className=" max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 absolute top-[65px] right-[13px] w-[301px] ">
          <div className="flex justify-end px-4 pt-4">
@@ -162,7 +176,63 @@ export const Profile = () => {
                   Update Profile
                </NavLink>
             </div>
-            <NavLink to={"/listing/create"} className="underline mt-4 hover:text-red-500 text-blue-700">Create Listing</NavLink>
+            <NavLink
+               to={"/listing/create"}
+               className="underline mt-4 hover:text-red-500 text-blue-700"
+            >
+               Create Listing
+            </NavLink>
+
+
+
+            <button
+               onClick={onHandleShowUserListings}
+               className="underline mt-4 hover:text-red-500 text-blue-700"
+            >
+               Show Listings
+            </button>
+            {userListings&&(
+     <div className='flex flex-col gap-4'>
+     <h1 className='text-center mt-7 text-2xl font-semibold'>
+       Your Listings
+     </h1>
+     {userListings.data?.map((item) => (
+      // console.log("item",item)
+      
+  
+       <div
+         key={item._id}
+         className='border rounded-lg p-3 flex justify-between items-center gap-4'
+       >
+         <Link to={`/listing/${item._id}`}>
+           <img
+             src={item.image[0]}
+             alt='listing cover'
+             className='h-16 w-16 object-contain'
+           />
+         </Link>
+         <Link
+           className='text-slate-700 font-semibold  hover:underline truncate flex-1'
+           to={`/listing/${item._id}`}
+         >
+           <p>{item.name}</p>
+         </Link>
+
+         <div className='flex flex-col item-center'>
+           <button
+             
+             className='text-red-700 uppercase'
+           >
+             Delete
+           </button>
+           <Link to={`/update-listing/${item._id}`}>
+             <button className='text-green-700 uppercase'>Edit</button>
+           </Link>
+         </div>
+       </div>
+     ))}
+   </div>
+            )}
          </div>
       </div>
    );

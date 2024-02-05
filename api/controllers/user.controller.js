@@ -240,13 +240,13 @@ const signOutUser = asyncHandler(async (req, res) => {
 
 // get user lISTINGS
 const getUserListings = asyncHandler(async (req, res) => {
-   console.log(req?.user?._id);
+   // console.log(req?.user?._id);
    if (req?.user?._id == req?.params?.id) {
-      console.log("user id", req?.user?._id);
-      console.log("params id", req?.params?.id);
+      // console.log("user id", req?.user?._id);
+      // console.log("params id", req?.params?.id);
       try {
          const listings = await Listing.find({ userRef: req?.params?.id });
-         console.log("listings user", listings);
+         // console.log("listings user", listings);
          return res
             .status(200)
             .json(new apiResponse(200, listings, "Sucessfully get listings"));
