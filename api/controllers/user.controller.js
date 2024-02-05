@@ -1,3 +1,4 @@
+import { Listing } from "../models/listing.models.js";
 import { User } from "../models/user.models.js";
 import { apiError } from "../utils/apiError.js";
 import { apiResponse } from "../utils/apiResponse.js";
@@ -236,4 +237,31 @@ const signOutUser = asyncHandler(async (req, res) => {
       .clearCookie("refreshToken", options)
       .json(new apiResponse(200, {}, "User Sucessfully logout"));
 });
-export { registerUser, loginUser, googleSignIn, upadateProfile, signOutUser };
+
+// get user lISTINGS
+const getUserListings = asyncHandler(async (req, res) => {
+   console.log(req?.user?._id);
+   if (req?.user?._id == req?.params?.id) {
+      console.log("user id", req?.user?._id);
+      console.log("params id", req?.params?.id);
+      try {
+         const listings = await Listing.find({ userRef: req?.params?.id });
+         console.log("listings user", listings);
+         return res
+            .status(200)
+            .json(new apiResponse(200, listings, "Sucessfully get listings"));
+      } catch (error) {
+         console.log("error at show listings", error);
+      }
+   } else {
+      throw new apiError(404, "User Does Not Exist");
+   }
+});
+export {
+   registerUser,
+   loginUser,
+   googleSignIn,
+   upadateProfile,
+   signOutUser,
+   getUserListings,
+};

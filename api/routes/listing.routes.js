@@ -4,5 +4,5 @@ import { verifyUser } from "../middleware/auth.middleware.js";
 
 const router = Router();
 
-router.route("/create").post(createListing);
+router.route("/create").post(verifyUser, createListing);
 export default router;

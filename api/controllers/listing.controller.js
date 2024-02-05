@@ -6,8 +6,8 @@ const createListing = asyncHandler(async (req, res) => {
    //  i have to check user is valid or not here
    try {
       const listing = await Listing.create(req.body);
-      console.log("req.body", req.body);
-      console.log("listing", listing);
+      // console.log("req.body", req.body);
+      // console.log("listing", listing);
 
       return res
          .status(201)

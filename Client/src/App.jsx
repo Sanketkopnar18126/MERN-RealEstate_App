@@ -22,7 +22,7 @@ function App() {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/about" element={<About />} />
           <Route path="/updateprofile" element={<UpdateProfile/>}/>
-          <Route path="/createlisting" element={<CreateListing/>}/>
+          <Route path="/listing/create" element={<CreateListing/>}/>
         </Routes>
       </BrowserRouter>
       </PersistGate>

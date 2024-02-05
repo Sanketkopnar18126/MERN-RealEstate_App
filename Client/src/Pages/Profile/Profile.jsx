@@ -162,7 +162,7 @@ export const Profile = () => {
                   Update Profile
                </NavLink>
             </div>
-            <NavLink to={"/createlisting"} className="underline mt-4 hover:text-red-500 text-blue-700">Create Listing</NavLink>
+            <NavLink to={"/listing/create"} className="underline mt-4 hover:text-red-500 text-blue-700">Create Listing</NavLink>
          </div>
       </div>
    );
