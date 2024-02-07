@@ -45,7 +45,7 @@ const deleteUserListing = asyncHandler(async (req, res) => {
 //  update Listing
 
 const updateListing = asyncHandler(async (req, res) => {
-   console.log("params", req.params.id);
+   // console.log("params", req.params.id);
    const userlisting = await Listing.findById(req.params.id);
    // console.log("userlisting", userlisting);
 
