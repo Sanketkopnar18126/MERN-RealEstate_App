@@ -9,6 +9,7 @@ import { persistStor, store } from "./Store/store.js";
 import { PersistGate } from "redux-persist/integration/react";
 import { UpdateProfile } from "./Pages/UpdateProfile/UpdateProfile.jsx";
 import { CreateListing } from "./Pages/CreateListing/CreateListing.jsx";
+import { UpdateListing } from "./Pages/UpdateListing/UpdateListing.jsx";
 function App() {
   return (
     <>
@@ -23,6 +24,7 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/updateprofile" element={<UpdateProfile/>}/>
           <Route path="/listing/create" element={<CreateListing/>}/>
+          <Route path="/update-listing/:id" element={<UpdateListing/>}/>
         </Routes>
       </BrowserRouter>
       </PersistGate>

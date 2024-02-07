@@ -53,7 +53,7 @@ export const Profile = () => {
          console.log("User successfully logged out");
          // Redirect after logout
          const data = await res.json();
-         console.log("data", data?.data);
+         // console.log("data", data?.data);
 
          // navigate('/login');
       } catch (error) {
@@ -97,7 +97,7 @@ export const Profile = () => {
             `/users/listings/${currentuser?.data?.user?._id}`
          );
          const data = await res.json();
-         console.log("data",data);
+         // console.log("data",data);
          setUserListings(data);
          // console.log("userListings",userListings)
       } catch (error) {

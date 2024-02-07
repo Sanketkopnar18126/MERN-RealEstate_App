@@ -70,4 +70,30 @@ const updateListing = asyncHandler(async (req, res) => {
       console.log("error occur at update user listing", error);
    }
 });
-export { createListing, deleteUserListing, updateListing };
+// get particular user listing
+const getUserParticularListing = asyncHandler(async (req, res) => {
+   try {
+      const userListing = await Listing.findById(req.params.id);
+      console.log("userListing", userListing);
+      if (!userListing) {
+         throw new apiError(404, "User Has not Listings");
+      }
+      return res
+         .status(200)
+         .json(
+            new apiResponse(
+               200,
+               userListing,
+               "Successfully get user listing..."
+            )
+         );
+   } catch (error) {
+      console.log("error at getting particular user listing", error);
+   }
+});
+export {
+   createListing,
+   deleteUserListing,
+   updateListing,
+   getUserParticularListing,
+};
