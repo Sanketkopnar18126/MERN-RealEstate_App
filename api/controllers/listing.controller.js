@@ -23,7 +23,7 @@ const deleteUserListing = asyncHandler(async (req, res) => {
    // console.log("reqparams", req.params.id);
    // console.log("requser", req.user._id);
    const userListngs = await Listing.findById(req.params.id);
-   console.log("user", userListngs);
+   // console.log("user", userListngs);
 
    if (!userListngs) {
       throw new apiError(404, "Not Valid user or Listings not exist");
@@ -41,4 +41,33 @@ const deleteUserListing = asyncHandler(async (req, res) => {
       console.log("error exist at delete UserListing", error);
    }
 });
-export { createListing, deleteUserListing };
+
+//  update Listing
+
+const updateListing = asyncHandler(async (req, res) => {
+   console.log("params", req.params.id);
+   const userlisting = await Listing.findById(req.params.id);
+   // console.log("userlisting", userlisting);
+
+   if (!userlisting) {
+      throw new apiError(404, "User does not update any listing");
+   }
+   if (req.user._id.toString() !== userlisting.userRef) {
+      throw new apiError(404, "user does not exist ");
+   }
+   try {
+      const updateListing = await Listing.findByIdAndUpdate(
+         req.params.id,
+         req.body,
+         { new: true }
+      );
+      return res
+         .status(200)
+         .json(
+            new apiResponse(200, updateListing, "Listing updatae Successfully")
+         );
+   } catch (error) {
+      console.log("error occur at update user listing", error);
+   }
+});
+export { createListing, deleteUserListing, updateListing };

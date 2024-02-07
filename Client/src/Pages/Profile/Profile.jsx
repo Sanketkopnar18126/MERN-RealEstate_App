@@ -97,13 +97,32 @@ export const Profile = () => {
             `/users/listings/${currentuser?.data?.user?._id}`
          );
          const data = await res.json();
-         // console.log(data);
+         console.log("data",data);
          setUserListings(data);
+         // console.log("userListings",userListings)
       } catch (error) {
          console.log("error occur at show listings", error);
       }
    };
-   console.log("userListings",userListings)
+   // console.log("userListings",userListings)
+
+   const onHandleDeleteListing = async (listingId) => {
+      try {
+         const res = await fetch(`/users/listing/delete/${listingId}`, {
+            method: "DELETE",
+         });
+         const data = await res.json();
+      setUserListings((prev) =>
+         prev.filter((items) => items._id !== listingId)
+         );
+      } catch (error) {
+         console.log("error in ui for delete listing:", error);
+      }
+   };
+//    console.log("userListings after delete",userListings)
+//    useEffect(()=>{
+// onHandleShowUserListings()
+//    },[userListings,setUserListings])
    return (
       <div className=" max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 absolute top-[65px] right-[13px] w-[301px] ">
          <div className="flex justify-end px-4 pt-4">
@@ -183,56 +202,55 @@ export const Profile = () => {
                Create Listing
             </NavLink>
 
-
-
             <button
                onClick={onHandleShowUserListings}
                className="underline mt-4 hover:text-red-500 text-blue-700"
             >
                Show Listings
             </button>
-            {userListings&&(
-     <div className='flex flex-col gap-4'>
-     <h1 className='text-center mt-7 text-2xl font-semibold'>
-       Your Listings
-     </h1>
-     {userListings.data.map((item) => (
-      // console.log("item",item)
-      
-  
-       <div
-         key={item._id}
-         className='border rounded-lg p-3 flex justify-between items-center gap-4'
-       >
-         <Link to={`/listing/${item._id}`}>
-           <img
-             src={item.image[0]}
-             alt='listing cover'
-             className='h-16 w-16 object-contain'
-           />
-         </Link>
-         <Link
-           className='text-slate-700 font-semibold  hover:underline truncate flex-1'
-           to={`/listing/${item._id}`}
-         >
-           <p>{item.name}</p>
-         </Link>
+             {userListings && userListings?.data?.length>0&& (
+               <div className="flex flex-col gap-4">
+                  <h1 className="text-center mt-7 text-2xl font-semibold">
+                     Your Listings
+                  </h1>
+                  {userListings.data.map((item) => (
+                     // console.log("item",item._id)
 
-         <div className='flex flex-col item-center'>
-           <button
-             
-             className='text-red-700 uppercase'
-           >
-             Delete
-           </button>
-           <Link to={`/update-listing/${item._id}`}>
-             <button className='text-green-700 uppercase'>Edit</button>
-           </Link>
-         </div>
-       </div>
-     ))}
-   </div>
-            )}
+                     <div
+                        key={item._id}
+                        className="border rounded-lg p-3 flex justify-between items-center gap-4"
+                     >
+                        <Link to={`/listing/${item._id}`}>
+                           <img
+                              src={item.image[0]}
+                              alt="listing cover"
+                              className="h-16 w-16 object-contain"
+                           />
+                        </Link>
+                        <Link
+                           className="text-slate-700 font-semibold  hover:underline truncate flex-1"
+                           to={`/listing/${item._id}`}
+                        >
+                           <p>{item.name}</p>
+                        </Link>
+
+                        <div className="flex flex-col item-center">
+                           <button
+                              onClick={() => onHandleDeleteListing(item._id)}
+                              className="text-red-700 uppercase"
+                           >
+                              Delete
+                           </button>
+                           <Link to={`/update-listing/${item._id}`}>
+                              <button className="text-green-700 uppercase">
+                                 Edit
+                              </button>
+                           </Link>
+                        </div>
+                     </div>
+                  ))}
+               </div>
+            )} 
          </div>
       </div>
    );
