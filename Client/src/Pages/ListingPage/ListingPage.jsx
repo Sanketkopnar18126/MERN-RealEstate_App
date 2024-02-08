@@ -40,7 +40,7 @@ export const ListingPage = () => {
       };
       fetchingData();
    }, [params.id]);
-   console.log("listing", listing);
+   // console.log("listing", listing);
    return (
       <>
          {loading && <p className="text-center my-7 text-2xl">Loading...</p>}
@@ -133,7 +133,7 @@ export const ListingPage = () => {
               </li>
             </ul>
             
-            {/* {currentuser && listing?.data?.userRef !== currentuser?.data?.user?._id&&!contact &&( */}
+            {currentuser && listing?.data?.userRef !== currentuser?.data?.user?._id&&!contact &&(
               <button
                 onClick={() => setContact(true)}
                 className='bg-slate-700 text-white rounded-lg uppercase hover:opacity-95 p-3'
@@ -141,7 +141,7 @@ export const ListingPage = () => {
                 Contact landlord
               </button>
 
-            {/* )} */}
+            )}
          {contact && <Contact listing={listing}/>}
          </div>
       </>
