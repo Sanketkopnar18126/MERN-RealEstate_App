@@ -229,7 +229,7 @@ export const Profile = () => {
                         </Link>
                         <Link
                            className="text-slate-700 font-semibold  hover:underline truncate flex-1"
-                           to={`/listing/${item._id}`}
+                           to={`/listing-page/${item._id}`}
                         >
                            <p>{item.name}</p>
                         </Link>

@@ -177,7 +177,7 @@ export const UpdateListing = () => {
          setFormData({ ...formData.data, [e.target.id]: e.target.value });
       }
    };
-   console.log("formData:", formData);
+   // console.log("formData:", formData);
 
    return (
       <>
