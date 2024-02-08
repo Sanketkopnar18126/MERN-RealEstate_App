@@ -257,6 +257,25 @@ const getUserListings = asyncHandler(async (req, res) => {
       throw new apiError(404, "User Does Not Exist");
    }
 });
+
+// get user
+const getUser = asyncHandler(async (req, res) => {
+   try {
+      // console.log("reqParams", req.params.id);
+      const user = await User.findById(req.params.id);
+      // console.log("user from get user Req", user);
+      if (!user) {
+         throw new apiError(404, "User does not exist");
+      }
+      // const { password: pass, ...rest } = user;
+      // console.log("user doc", user);
+      return res
+         .status(200)
+         .json(new apiResponse(200, user, "successfully get the user"));
+   } catch (error) {
+      console.log("error occur to get user information grom getUser:", error);
+   }
+});
 export {
    registerUser,
    loginUser,
@@ -264,4 +283,5 @@ export {
    upadateProfile,
    signOutUser,
    getUserListings,
+   getUser,
 };
