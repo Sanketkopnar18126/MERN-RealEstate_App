@@ -31,7 +31,7 @@ import listingRouter from "./routes/listing.routes.js";
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/users/listing", listingRouter);
 
-app.use(express.static(path.join(dirname, "api", "client", "dist")));
+app.use(express.static(path.join(dirname, "api", "dist")));
 app.get("*", (req, res) => {
    res.sendFile(path.join(dirname, "api", "client", "dist", "index.html"));
 });
