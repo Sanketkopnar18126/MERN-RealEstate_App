@@ -1,24 +1,45 @@
 import { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { Profile } from "../../Pages/Profile/Profile";
 import { useSelector } from "react-redux";
-
+import { FaSearch } from "react-icons/fa";
 export const Header = () => {
    // const [showProfile ,setShowProfile]=useState(true)
    // const [showLogin,setLogin]=useState(true)
 
    const [currentUser, setCurrentUser] = useState();
    const [showdropProfile, setshowdropProfile] = useState(false);
-
+   const [searchTerm, setSearchTerm] = useState("");
    const { currentuser } = useSelector((state) => state.userdata);
    useEffect(() => {
       setCurrentUser(currentuser);
-   }, [currentUser,currentuser]);
+   }, [currentUser, currentuser]);
 
    //  console.log("cu",currentUser)
    const onHandleProfileDrop = () => {
       setshowdropProfile(!showdropProfile);
    };
+   const navigate = useNavigate();
+   const onHandleSubmit = (e) => {
+      e.preventDefault();
+      const urlParams = new URLSearchParams(window.location.search);
+      console.log("urlParams", urlParams);
+      urlParams.set("searchTerm", searchTerm);
+      // console.log("urlParams2",urlParams)
+
+      const searchQuery = urlParams.toString();
+      // console.log("searchQuery",searchQuery)
+      navigate(`/search?${searchQuery}`);
+   };
+
+   useEffect(()=>{
+      const urlParams=new URLSearchParams(location.search)
+      const searchTermForm=urlParams.get('searchTerm')
+      // console.log("searchTermForm",searchTermForm)
+      if(searchTermForm){
+         setSearchTerm(searchTermForm)
+      }
+   },[location.search])
    return (
       <nav className="bg-white border-gray-200 dark:bg-gray-900">
          <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
@@ -54,7 +75,21 @@ export const Header = () => {
                   {showdropProfile && <Profile />}
                </div>
             )}
-
+            <div
+               className="bg-white flex h-[43px] rounded-[20px] p-[11px]"
+               onClick={onHandleSubmit}
+            >
+               <input
+                  type="text"
+                  placeholder="Search..."
+                  className="bg-transparent focus:outline-none w-24 sm:w-64"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+               />
+               <button>
+                  <FaSearch className="text-slate-600" />
+               </button>
+            </div>
             <div
                className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
                id="navbar-user"
