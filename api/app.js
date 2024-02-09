@@ -3,7 +3,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 
 import path from "path";
-const _dirname = path.resolve();
+const dirname = path.resolve();
 const app = express();
 
 app.use(
@@ -31,8 +31,8 @@ import listingRouter from "./routes/listing.routes.js";
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/users/listing", listingRouter);
 
-app.use(express.static(path.join(__dirname, "/client/dist")));
+app.use(express.static(path.join(dirname, "/client/dist")));
 app.get("*", (req, res) => {
-   res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
+   res.sendFile(path.join(dirname, "client", "dist", "index.html"));
 });
 export { app };
