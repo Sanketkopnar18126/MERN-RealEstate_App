@@ -23,7 +23,7 @@ export const Header = () => {
    const onHandleSubmit = (e) => {
       e.preventDefault();
       const urlParams = new URLSearchParams(window.location.search);
-      console.log("urlParams", urlParams);
+      // console.log("urlParams", urlParams);
       urlParams.set("searchTerm", searchTerm);
       // console.log("urlParams2",urlParams)
 

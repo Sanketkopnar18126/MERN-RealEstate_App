@@ -11,6 +11,7 @@ import { UpdateProfile } from "./Pages/UpdateProfile/UpdateProfile.jsx";
 import { CreateListing } from "./Pages/CreateListing/CreateListing.jsx";
 import { UpdateListing } from "./Pages/UpdateListing/UpdateListing.jsx";
 import { ListingPage } from "./Pages/ListingPage/ListingPage.jsx";
+import { Search } from "./Pages/Search/Search.jsx";
 function App() {
   return (
     <>
@@ -27,6 +28,7 @@ function App() {
           <Route path="/listing/create" element={<CreateListing/>}/>
           <Route path="/update-listing/:id" element={<UpdateListing/>}/>
           <Route path="/listing-page/:id" element={<ListingPage/>}/>
+          <Route path="/search" element={<Search/>}/>
         </Routes>
       </BrowserRouter>
       </PersistGate>
