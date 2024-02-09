@@ -132,8 +132,8 @@ export const CreateListing = () => {
             },
             body: JSON.stringify({...formData,userRef:currentuser?.data?.user?._id}),
          });
-         console.log("formData", formData);
-         console.log("res",res);
+         // console.log("formData", formData);
+         // console.log("res",res);
 
          // Check if the response status is in the range 200-299
          // if (!res.ok) {
@@ -142,9 +142,9 @@ export const CreateListing = () => {
 
          // Parse the response data
          const data = await res.json();
-         console.log("data",data);
+         // console.log("data",data);
+         navigate(`/listing-page/${data?.data?._id}`)
          setloading(false)
-         navigate(`/listing/${data?.data?._id}`)
       } catch (error) {
          console.log("error", error);
          console.log("error at doctype")
