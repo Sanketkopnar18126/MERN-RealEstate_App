@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "nodemon -r dotenv/config --experimental-json-modules api/index.js",
     "start": "node api/index.js",
-    "build": "npm run build"
+    "build": "npm install && npm install --prefix Client && npm run build --prefix Client"
   },
   
   "author": "Sanket",
